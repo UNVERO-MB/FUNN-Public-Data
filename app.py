@@ -1,41 +1,49 @@
-import os
 from flask import Flask, jsonify
+from datetime import datetime
 
 app = Flask(__name__)
 
-# Use Render-assigned port or default to 10000
-PORT = int(os.getenv("PORT", 10000))
-
-# Allow all origins (CORS support) to prevent access restrictions
-@app.after_request
-def add_cors_headers(response):
-    response.headers["Access-Control-Allow-Origin"] = "*"
-    response.headers["Access-Control-Allow-Headers"] = "Content-Type"
-    response.headers["Access-Control-Allow-Methods"] = "GET, OPTIONS"
-    return response
-
-@app.route("/", methods=["GET"])
-def home():
-    return jsonify({
-        "message": "Welcome to the FUNN Fuel Prices API!",
-        "endpoints": ["/fuel-prices"]
-    })
-
-@app.route("/fuel-prices", methods=["GET"])
+@app.route('/fuel-prices', methods=['GET'])
 def get_fuel_prices():
-    data = {
-        "facts": [
-            {
-                "Month/Year": "MAR25",
-                "Day": "10MAR25",
-                "Product group": "Road transport diesel",
-                "Product": "Road Diesel B7 (€/L)",
-                "Price incl. VAT": 1.4044044044044
-            }
-        ]
+    latest_date, latest_data = fetch_latest_fuel_prices()
+    
+    # Format date for metadata
+    updated_date = datetime.strptime(latest_date, "%Y-%m-%d").strftime("%Y-%m-%d")
+    
+    # Construct metadata
+    metadata = {
+        "id": "unique-dataset-id",
+        "label": "Fuel Prices",
+        "description": "Daily fuel prices at Juodeikiai station.",
+        "updated": updated_date
     }
-    return jsonify(data)
+    
+    # Construct facts
+    facts = []
+    for entry in latest_data:
+        date_obj = datetime.strptime(entry['Date'], "%Y-%m-%d")
+        fact = {
+            "Month/Year": date_obj.strftime("%b%y").upper(),
+            "Day": date_obj.strftime("%d%b%y").upper(),
+            "Product group": determine_product_group(entry['Product']),
+            "Product": f"{entry['Product']} (€/L)",
+            "Price incl. VAT": entry['Price']
+        }
+        facts.append(fact)
+    
+    # Combine metadata and facts
+    response = {
+        "metadata": metadata,
+        "facts": facts
+    }
+    
+    return jsonify(response)
 
-if __name__ == "__main__":
-    print(f"🚀 Running on port {PORT}")
-    app.run(host="0.0.0.0", port=PORT)
+def determine_product_group(product_name):
+    # Logic to determine product group based on product name
+    if "diesel" in product_name.lower():
+        return "Road transport diesel"
+    elif "petrol" in product_name.lower() or "gasoline" in product_name.lower():
+        return "Petrol"
+    else:
+        return "Other"
