@@ -1,9 +1,11 @@
-[
-    {
-        "Month/Year": "MAR25",
-        "Day": "10MAR25",
-        "Product group": "Road transport diesel",
-        "Product": "Road Diesel B7",
-        "Price incl. VAT": 1.4044044044044
-    }
-]
+{
+    "facts": [
+        {
+            "Month/Year": "MAR25",
+            "Day": "10MAR25",
+            "Product group": "Road transport diesel",
+            "Product": "Road Diesel B7",
+            "Price incl. VAT": 1.4044044044044
+        }
+    ]
+}
