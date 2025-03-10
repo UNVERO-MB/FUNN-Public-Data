@@ -3,13 +3,18 @@ from flask import Flask, jsonify
 
 app = Flask(__name__)
 
-# Use the Render-assigned port (default to 5000 if not found)
+# Use the Render-assigned port
 PORT = int(os.getenv("PORT", 5000))
 
+# Define the home route (avoid 404 errors)
 @app.route("/", methods=["GET"])
 def home():
-    return jsonify({"message": "Welcome to the FUNN Fuel Prices API!", "endpoints": ["/fuel-prices"]})
+    return jsonify({
+        "message": "Welcome to the FUNN Fuel Prices API!",
+        "endpoints": ["/fuel-prices"]
+    })
 
+# Define the main API route
 @app.route("/fuel-prices", methods=["GET"])
 def get_fuel_prices():
     data = {
@@ -26,4 +31,5 @@ def get_fuel_prices():
     return jsonify(data)
 
 if __name__ == "__main__":
+    print(f"🚀 Running on port {PORT}")
     app.run(host="0.0.0.0", port=PORT)
