@@ -1,13 +1,15 @@
+import os
 from flask import Flask, jsonify
 
 app = Flask(__name__)
 
-# Default route for the root ("/") to avoid 404 errors
+# Use the Render-assigned port (default to 5000 if not found)
+PORT = int(os.getenv("PORT", 5000))
+
 @app.route("/", methods=["GET"])
 def home():
     return jsonify({"message": "Welcome to the FUNN Fuel Prices API!", "endpoints": ["/fuel-prices"]})
 
-# Main fuel price endpoint
 @app.route("/fuel-prices", methods=["GET"])
 def get_fuel_prices():
     data = {
@@ -24,4 +26,4 @@ def get_fuel_prices():
     return jsonify(data)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=PORT)
