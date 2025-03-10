@@ -3,10 +3,17 @@ from flask import Flask, jsonify
 
 app = Flask(__name__)
 
-# Use the Render-assigned port
+# Use Render-assigned port or default to 5000
 PORT = int(os.getenv("PORT", 5000))
 
-# Define the home route (avoid 404 errors)
+# Allow all origins (CORS support) to prevent access restrictions
+@app.after_request
+def add_cors_headers(response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type"
+    response.headers["Access-Control-Allow-Methods"] = "GET, OPTIONS"
+    return response
+
 @app.route("/", methods=["GET"])
 def home():
     return jsonify({
@@ -14,7 +21,6 @@ def home():
         "endpoints": ["/fuel-prices"]
     })
 
-# Define the main API route
 @app.route("/fuel-prices", methods=["GET"])
 def get_fuel_prices():
     data = {
