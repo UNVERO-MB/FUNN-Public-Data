@@ -3,8 +3,8 @@ from flask import Flask, jsonify
 
 app = Flask(__name__)
 
-# Use Render-assigned port or default to 5000
-PORT = int(os.getenv("PORT", 5000))
+# Use Render-assigned port or default to 10000
+PORT = int(os.getenv("PORT", 10000))
 
 # Allow all origins (CORS support) to prevent access restrictions
 @app.after_request
