@@ -2,7 +2,12 @@ from flask import Flask, jsonify
 
 app = Flask(__name__)
 
-# Sample function to serve JSON data
+# Default route for the root ("/") to avoid 404 errors
+@app.route("/", methods=["GET"])
+def home():
+    return jsonify({"message": "Welcome to the FUNN Fuel Prices API!", "endpoints": ["/fuel-prices"]})
+
+# Main fuel price endpoint
 @app.route("/fuel-prices", methods=["GET"])
 def get_fuel_prices():
     data = {
