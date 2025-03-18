@@ -3,36 +3,36 @@
         "id": "unique-dataset-id",
         "label": "Fuel Prices",
         "description": "Daily fuel prices at Juodeikiai station.",
-        "updated": "2025-03-17"
+        "updated": "2025-03-18"
     },
     "facts": [
         {
             "Month/Year": "MAR25",
-            "Day": "17MAR25",
+            "Day": "18MAR25",
             "Product group": "Other",
             "Product": "95 (€/L)",
-            "Price incl. VAT": 1.26546546546547
+            "Price incl. VAT": 1.27512512512512
         },
         {
             "Month/Year": "MAR25",
-            "Day": "17MAR25",
+            "Day": "18MAR25",
             "Product group": "Road transport diesel",
             "Product": "Diesel (€/L)",
-            "Price incl. VAT": 1.35672672672673
+            "Price incl. VAT": 1.35815815815816
         },
         {
             "Month/Year": "MAR25",
-            "Day": "17MAR25",
+            "Day": "18MAR25",
             "Product group": "Road transport diesel",
             "Product": "Diesel agro (€/L)",
-            "Price incl. VAT": 0.840255267423014
+            "Price incl. VAT": 0.841703808752026
         },
         {
             "Month/Year": "MAR25",
-            "Day": "17MAR25",
+            "Day": "18MAR25",
             "Product group": "Other",
             "Product": "LPG (€/L)",
-            "Price incl. VAT": 0.690875706214689
+            "Price incl. VAT": 0.69035593220339
         }
     ]
 }
